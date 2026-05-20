@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | FlashLearn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --text-main: #334155;
+            --accent: #f1f5f9;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f2ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+       html, body{
+            width: 100%;
+            min-width: 100vh;
+        }
+        body {
+            
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background: url(bgblur.jpg);
+            backdrop-filter: blur(30px);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            
+        }
+        .cotent{
+            height: 2000px;
+            padding: 50px;
+        }
+        nav {
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background: black;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            justify-content: space-between;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        nav ul{
+            flex:1;
+            text-align: right;
+            margin-right:30px;
+            
+        }
+        .navlogo{
+            display: flex;
+            align-items: center;
+            gap: 10px;}
+         .logo{
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,242,255,0.3));
+         }
+         .topic{
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,242,255,0.3));
+            
+            
+         }
+        /* --- About Hero --- */
+        .about-hero {
+            padding: 12rem 8% 6rem;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, #eef2ff 0%, transparent 50%);
+        }
+        .about-hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--dark); margin-bottom: 1rem; }
+        .about-hero p { max-width: 700px; margin: 0 auto; font-size: 1.2rem; color: #64748b; }
+
+        /* --- Values Grid --- */
+        .values-section { padding: 4rem 8%; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .value-card {
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+        }
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+        .icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+        .value-card h3 { margin-bottom: 1rem; color: var(--dark); }
+
+        /* --- Science Section (Fascinating Dark Style) --- */
+        .science-box {
+            margin: 6rem 8%;
+            padding: 6rem 4%;
+            background: var(--dark);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+        .science-text { flex: 1; z-index: 2; }
+        .science-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .science-text p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 1rem; }
+        
+        .glow-effect {
+            position: absolute;
+            top: -20%; right: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.3) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: 1;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 8rem 8%;
+            text-align: center;
+        }
+        .cta-btn {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 800;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .cta-btn:hover { transform: scale(1.05); background: #4338ca; }
+
+        footer { padding: 4rem 8%; background: var(--accent); border-top: 1px solid #e2e8f0; text-align: center; }
+
+        @media (max-width: 768px) {
+            .science-box { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="navlogo">
+            <image src="love.svg" alt="FlashLearn Logo" style="width: 150px; height: 100px;"></image>
+        <h1 class="logo">StudyBuddy</h1></div>
+        <header style="margin: align-center;"><h1 class="topic">Flashcard Generator</h1></header>
+    </nav>
+
+
+    <header class="about-hero">
+        <h1>We believe everyone is a <span style="color: var(--primary)">genius</span>.</h1>
+        <p>They just need the right tools to unlock it. FlashLearn was built to bridge the gap between effort and mastery.</p>
+    </header>
+
+    <section class="values-section">
+        <div class="grid">
+            <div class="value-card">
+                <span class="icon">🚀</span>
+                <h3>Efficiency</h3>
+                <p>We value your time. Our tools are designed to maximize retention in the shortest study sessions possible.</p>
+            </div>
+            <div class="value-card">
+                <span class="icon">🧠</span>
+                <h3>Cognitive Science</h3>
+                <p>Every feature we build is backed by spaced-repetition and active recall research.</p>
+            </div>
+            <div class="value-card">
+                <span class="icon">🎨</span>
+                <h3>Intuitive Design</h3>
+                <p>Learning is hard enough. Your tools should be beautiful, simple, and a joy to use every day.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="science-box">
+        <div class="glow-effect"></div>
+        <div class="science-text">
+            <h2>The Science of Mastery</h2>
+            <p>FlashLearn uses a proprietary <strong>Neural Spacing</strong> algorithm. Instead of showing you cards randomly, we analyze your "forgetting curve" to predict exactly when a memory is about to fade.</p>
+            <p>By reviewing at that exact moment, you move information from short-term to long-term memory permanently.</p>
+        </div>
+        <div class="science-image" style="z-index: 2;">
+            <!-- Placeholder for an abstract data/brain icon -->
+            <div style="width: 200px; height: 200px; border: 2px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; box-shadow: 0 0 30px rgba(79, 70, 229, 0.4);">
+                🧬
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Start your journey to mastery today.</h2>
+        <p style="margin-bottom: 2.5rem; color: #64748b;">Join thousands of students and professionals using FlashLearn.</p>
+        <a href="sign up and in.html" class="cta-btn">Create Free Account</a>
+    </section>
+     <script type="module" src="app.js"></script>
+
+    <footer>
+        <p>&copy; 2026 FlashLearn App. Empowering minds everywhere.</p>
+    </footer>
+
+</body>
+</html>

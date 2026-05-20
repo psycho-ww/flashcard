@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --primary-hover: #5b4cd8;
+            --bg-overlay: rgba(26, 24, 37, 0.45);
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-main: #ffffff;
+            --text-muted: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Cozy, lo-fi study aesthetic background */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Container holding both forms */
+        .auth-container {
+            position: relative;
+            width: 430px;
+            min-height: 580px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Wrapper for handling smooth sliding sliding panels */
+        .forms-wrapper {
+            display: flex;
+            width: 200%; /* Side by side forms */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Active states for flipping panels */
+        .auth-container.active-signup .forms-wrapper {
+            transform: translateX(-50%);
+        }
+
+        .form-box {
+            width: 50%;
+            transition: opacity 0.4s ease;
+            opacity: 1;
+        }
+
+        .auth-container.active-signup .form-box.login {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .auth-container:not(.active-signup) .form-box.signup {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        /* Input Elements styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            outline: none;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 8px rgba(108, 92, 231, 0.4);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Buttons */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        /* Google button */
+        .btn-google {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 12px;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        .btn-google:hover {
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Switch text footer */
+        .switch-text {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .switch-text a {
+            color: #a29bfe;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .switch-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container" id="authContainer">
+        <div class="forms-wrapper">
+            
+            <div class="form-box login">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Focus mode on. Time to study!</p>
+                
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <div class="divider">or</div>
+
+                <button class="btn-google google-auth-btn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                    Continue with Google
+                </button>
+
+                <p class="switch-text">
+                    New session? <a href="#" id="toSignup">Create an account</a>
+                </p>
+            </div>
+
+            <div class="form-box signup">
+                <h2>Create Account</h2>
+                <p class="subtitle">Join the space and trace your progress</p>
+                
+                <form id="signupForm">
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="signupEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                </form>
+
+                <div class="divider">or</div>
+
+                <button class="btn-google google-auth-btn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                    Sign up with Google
+                </button>
+
+                <p class="switch-text">
+                    Already a member? <a href="#" id="toLogin">Sign In instead</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module">
+        // Import necessary Firebase SDK features
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            GoogleAuthProvider, 
+            signInWithPopup 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // TODO: Replace with your project's unique Firebase configuration keys
+       const firebaseConfig = {
+  apiKey: "AIzaSyB40OIxCLDHQl0cAfEZnQdrjxGg-SaFNqw",
+  authDomain: "flashcard-web-ed6a4.firebaseapp.com",
+  projectId: "flashcard-web-ed6a4",
+  storageBucket: "flashcard-web-ed6a4.firebasestorage.app",
+  messagingSenderId: "831812901246",
+  appId: "1:831812901246:web:bbc2e41a49fa87522fbb2f",
+  measurementId: "G-NHMHZGMXWK"
+};
+
+        // Initialize Firebase Apps and Services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // --- DOM Elements & UI Toggle Animation Logic ---
+        const authContainer = document.getElementById('authContainer');
+        const toSignup = document.getElementById('toSignup');
+        const toLogin = document.getElementById('toLogin');
+
+        toSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            authContainer.classList.add('active-signup');
+        });
+
+        toLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            authContainer.classList.remove('active-signup');
+        });
+
+
+        // --- Firebase Core Logic Functions ---
+
+        // 1. Email/Password Sign Up
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert(`Account created successfully! Welcome: ${user.email}`);
+                })
+                .catch((error) => {
+                    alert(`Signup Error: ${error.message}`);
+                });
+        });
+
+        // 2. Email/Password Sign In
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert(`Logged in successfully! Welcome back: ${user.email}`);
+                })
+                .catch((error) => {
+                    alert(`Login Error: ${error.message}`);
+                });
+        });
+
+        // 3. Google Sign In / Sign Up (Shared across both buttons)
+        const googleButtons = document.querySelectorAll('.google-auth-btn');
+        googleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                signInWithPopup(auth, googleProvider)
+                    .then((result) => {
+                        const user = result.user;
+                        alert(`Successfully authenticated via Google as: ${user.displayName}`);
+                    })
+                    .catch((error) => {
+                        alert(`Google Auth Error: ${error.message}`);
+                    });
+            });
+        });
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

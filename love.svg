@@ -1,0 +1,44 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Bold Cinematic Gradient for Cards -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F2FF" />
+      <stop offset="100%" stop-color="#FF007F" />
+    </linearGradient>
+
+    <!-- Blurple Glow Filter -->
+    <filter id="blurpleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Card 3 (Back Layer - Max Thickness) -->
+  <rect x="40" y="70" width="130" height="170" rx="25" stroke="url(#cardGrad)" stroke-width="12" opacity="0.2" transform="rotate(-15 40 70)" />
+
+  <!-- Card 2 (Middle Layer - Max Thickness) -->
+  <rect x="75" y="55" width="140" height="180" rx="28" stroke="url(#cardGrad)" stroke-width="15" opacity="0.5" transform="rotate(-5 75 55)" />
+
+  <!-- Card 1 (Front Layer - Maximum Bold) -->
+  <rect x="100" y="40" width="155" height="195" rx="32" stroke="url(#cardGrad)" stroke-width="20" />
+
+  <!-- BIG Rotating Blurple Star -->
+  <g filter="url(#blurpleGlow)">
+    <!-- 
+      Star Color: #6366F1 (Blurple)
+      Size increased: Coordinates expanded for a massive center-piece 
+    -->
+    <path d="M177 85L172 110L147 115L172 120L177 145L182 120L207 115L182 110L177 85Z" fill="#6366F1">
+      <!-- Rotation around the star's center (177, 115) -->
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        from="0 177 115" 
+        to="360 177 115" 
+        dur="3s" 
+        repeatCount="indefinite" />
+      <!-- Fascinating pulse effect -->
+      <animate attributeName="fill" values="#6366F1;#8B5CF6;#6366F1" dur="2s" repeatCount="indefinite" />
+    </path>
+  </g>
+</svg>
